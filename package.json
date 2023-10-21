@@ -1,0 +1,16 @@
+{
+  "name": "miniprogram-ts-less-quickstart",
+  "version": "1.0.0",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.11.1"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^3.12.1"
+  },
+  "main": ".eslintrc.js",
+  "description": ""
+}
