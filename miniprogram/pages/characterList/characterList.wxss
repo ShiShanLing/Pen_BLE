@@ -1,1 +1,13 @@
 /* pages/characterList.wxss */
+
+
+.button1 {
+  position: fixed;
+  width: 100rpx;
+  height: 40rpx;
+}
+.button {
+  position: fixed;
+  width: 100rpx;
+  height: 40rpx;
+}

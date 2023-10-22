@@ -4,18 +4,12 @@
 	<block wx:for="{{services}}" wx:for-index="index" wx:for-item="item">
 		<label>{{item.uuid}}</label>
 		<van-cell-group inset>
-			<!-- 这里再写一个for循环 -->
-			<van-cell 
-			wx:for="{{item.characteristics}}" 
-			wx:for-index="chaIndex" 
-			wx:for-item="chaItem" 
-			wx:key="chaIndex" 
-			title="特征UUID:" 
-			value="{{chaItem.uuid}}" 
-			bindtap="sendText"
-			data-idType="{{[item.uuid,chaItem.uuid]}}"
-			label="notify:{{chaItem.properties.notify ? 'true':'false'}} ... read:{{chaItem.properties.read ?  'true':'false'}} ... write:{{chaItem.properties.write ? 'true':'false'}}" />
-			<!-- console.log(`打印他的值notify:${chaItem.properties.notify ? 'true':'false'} \nread:${chaItem.properties.read ?  'true':'false'} \nwrite:${chaItem.properties.write ? 'true':'false'}`); -->
+			<view wx:for="{{item.characteristics}}" wx:for-index="chaIndex" wx:for-item="chaItem" wx:key="chaIndex" >
+				<van-cell title="特征UUID:" value="{{chaItem.uuid}}" label="notify:{{chaItem.properties.notify ? 'true':'false'}} ... read:{{chaItem.properties.read ?  'true':'false'}} ... write:{{chaItem.properties.write ? 'true':'false'}}">
+			</van-cell>
+				<!-- <button type="primary" class="button1" bindtap="readBle" data-idType="{{[item.uuid,chaItem.uuid]}}">读取</button> -->
+				<button type="primary" class="button" bindtap="writeBle"  data-idType="{{item}}">写入</button>
+			</view>
 
 		</van-cell-group>
 	</block>

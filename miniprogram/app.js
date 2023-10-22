@@ -10,7 +10,16 @@ App({
       str += String.fromCharCode(arr[i])
     }
     return str
-  },
+	},
+	arrayBuffer2Hex(buffer) {
+		const hexArr = Array.prototype.map.call(
+			new Uint8Array(buffer),
+			function (bit) {
+				return ('00' + bit.toString(16)).slice(-2)
+			}
+		)
+		return hexArr.join('')
+		},
   onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []

@@ -122,12 +122,17 @@ Page({
 			success(res) {
 				console.log("wx.getStorage==-success", res.data);
 				let tempList = res.data
-				for (const index in deviceIds) {
-					const element = deviceIds[index];
-					if (tempList.indexOf(element) == -1){
-						tempList.push(element);
+				if(tempList){
+					for (const index in deviceIds) {
+						const element = deviceIds[index];
+						if (tempList.indexOf(element) == -1){
+							tempList.push(element);
+						}
 					}
+				}else{
+					tempList = deviceIds
 				}
+				console.log("查看存储成功的设备--", tempList);
 			
 				
 				wx.setStorage({
