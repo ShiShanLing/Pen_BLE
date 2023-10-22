@@ -1,16 +1,7 @@
 <!--pages/ConnectedDevice/ConnectedDevice.wxml-->
 <view class="container">
   <scroll-view class="scroll" scroll-y>
-    <view class="addItem">
-      <view class="content">
-        <view class="item" bind:tap="addDev">
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-
-    <view class="showPencilItem">
+    <view class="showPencilItem" >
       <view class="content">
         <van-row>
 
@@ -37,5 +28,15 @@
       </view>
     </view>
 
+    <view class="addItem">
+      <view class="content">
+        <view class="item" bind:tap="addDev">
+          <van-icon class="icon" name="add-o" color="#1989fa" />
+          <label class="text">添加设备</label>
+        </view>
+      </view>
+    </view>
+
+  
   </scroll-view>
 </view>
