@@ -1,0 +1,41 @@
+<!--pages/ConnectedDevice/ConnectedDevice.wxml-->
+<view class="container">
+  <scroll-view class="scroll" scroll-y>
+    <view class="addItem">
+      <view class="content">
+        <view class="item" bind:tap="addDev">
+          <van-icon class="icon" name="add-o" color="#1989fa" />
+          <label class="text">添加设备</label>
+        </view>
+      </view>
+    </view>
+
+    <view class="showPencilItem">
+      <view class="content">
+        <van-row>
+
+          <van-col span="8">
+            <van-icon class="pen-icon" name="edit" />
+            <label class="pen-name">电子笔名称</label>
+          </van-col>
+          <view class="pen-connect-state-box">
+
+            <label class="text">NO</label>
+            <van-switch class="switch" checked="{{ checked }}" size="20px" />
+          </view>
+
+
+
+          <!-- pen-connect-state-box -->
+        </van-row>
+        <van-row>
+          <van-icon name="edit" />
+
+          <van-col span="8">span: 8</van-col>
+          <van-col span="8">span: 8</van-col>
+        </van-row>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

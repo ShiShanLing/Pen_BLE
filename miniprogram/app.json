@@ -1,10 +1,12 @@
 {
   "pages": [
+    "pages/ConnectedDevice/ConnectedDevice",
+    "pages/search/search",
     "pages/index/index",
 		"pages/logs/logs",
 		"pages/characterList/characterList",
-		"pages/device/device",
-		"pages/search/search"
+		"pages/device/device"
+		
 	],
   "window": {
     "backgroundTextStyle": "light",
