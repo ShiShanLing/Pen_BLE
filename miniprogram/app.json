@@ -5,13 +5,14 @@
     "pages/index/index",
 		"pages/logs/logs",
 		"pages/characterList/characterList",
-		"pages/device/device"
+    "pages/device/device",
+    "pages/AddDevice/AddDevice"
 		
 	],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "笔随我动",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"

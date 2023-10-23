@@ -21,6 +21,8 @@ Component({
 	methods: {
       addDev(){
         console.log("点击了添加设备");
+        wx.navigateTo({url:'../AddDevice/AddDevice?'})
+        
         
       }
 	}

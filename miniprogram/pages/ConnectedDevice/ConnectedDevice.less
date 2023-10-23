@@ -6,6 +6,8 @@ page {
   width: 100%;
   height: 100%;
 }
+@main-color: #1989fa;
+
 
 .container {
   background-color: rgb(231, 231, 231);
@@ -18,119 +20,165 @@ page {
     height: auto;
     // background-color: red;
   }
+
   //添加设备的按钮
   .addItem {
     background-color: rgb(231, 231, 231);
     display: flex;
     flex-direction: column;
     width: auto;
-    height: 200rpx;
-    padding: 7rpx 15rpx;
+    height: 100px;
+    padding: 3px 8px;
+
     .content {
       background-color: white;
       flex: 1;
       width: 100%;
       // background-color: orange;
-      border-radius: 30rpx;
-      border: 1rpx solid rgba(255, 165, 0, 0.5);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 165, 0, 0.5);
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .item {
         display: flex;
         flex-direction: row;
         align-items: center;
-        width: 300rpx;
-        height: 100rpx;
-        margin-top: 50rpx;
+        width: 150px;
+        height: 50px;
+        margin-top: 25px;
         position: relative;
-        .icon{
+
+        .icon {
           font-size: 18px;
-          margin-left: 70rpx;
+          margin-left: 35px;
         }
-        .text{
+
+        .text {
           margin-left: 10px;
           font-size: 16px;
-          color: #1989fa;
+          color: @main-color;
         }
       }
     }
 
   }
+
   //展示设备的cell
-  .showPencilItem{
+  .showPencilItem {
     background-color: rgb(231, 231, 231);
     display: flex;
     flex-direction: column;
     width: auto;
-    height: 200rpx;
-    padding: 7rpx 15rpx;
+    height: 100px;
+    padding: 3px 8px;
+
     .content {
-      
+
       background-color: white;
       flex: 1;
-     
+
       // background-color: orange;
-      border-radius: 30rpx;
-      border: 1rpx solid rgba(0, 0, 255, 0.5);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 0, 255, 0.5);
       display: flex;
       flex-direction: column;
-      padding: 10px;
+      padding: 10px 20px;
       align-items: left;
-      .pen-icon{
+
+      .pen-icon {
         margin-right: 10px;
-        color: blue;
-        font-size: 40rpx;
-        margin-left: 10rpx;
+        color: #1989fa;
+        font-size: 20px;
+        margin-left: 5px;
         // background-color: red;
         // margin-top: 5rpx;
       }
-      .pen-name{
-        font-size: 32rpx;
+
+      .pen-name {
+        font-size: 16px;
+
 
       }
 
-      .pen-uuid{
+      .refresh-btn {
+        margin-left: 8px;
 
+        padding: 8x;
+        font-size: 18px;
       }
-      .pen-connect-state-box{
-       
+
+      .pen-connect-state-box {
+
         display: flex;
         flex-direction: row;
         align-items: center;
         position: absolute;
-        right: 30rpx;
-        .text{
-          font-size: 16px;
-            margin-right: 15rpx;
-            line-height: 20px;
+        right: 15px;
+        top: 17.5px;
 
-            // background-color: red;
+        .text {
+          font-size: 16px;
+          margin-right: 7.5px;
+          line-height: 20px;
+
+          // background-color: red;
         }
-        .switch{
+
+        .switch {
           // background-color: red;
           padding: 0;
-          margin:0;
-   margin-bottom: 0;
+          margin: 0;
+          margin-bottom: 0;
 
         }
 
       }
-      //剩余电量
-      .pen-sydl-state{
 
-      }
-      // 是否在充电
-      .pen-charged-state{
+      .pen-sydl-box {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
 
+        //剩余电量
+        .pen-sydl-state {
+          // background-image: url('../../images/dl.png');
+
+          width: 25px;
+          height: 25px;
+          // background-color: red;
+        }
+        .pen-sydl-text {
+          flex: 1;
+          margin-left: 10px;
+          font-size: 14px;
+          line-height: 25px;
+          height: 25px;
+
+          color: rgb(81, 81, 81);
+        }
+
+        .isConnect-tag{
+          border: 1.2px solid  @main-color;
+          color:  @main-color;
+          padding: 1px 2px;
+          font-size: 13px;
+          text-align: center;
+
+        }
       }
+
     }
   }
 
-  &:first-child{
-    padding-top: 7rpx;
+  &:first-child {
+    padding-top: 3.5px;
   }
 }
+
 // .container:first-child{
 //   padding-top: 7rpx;
 // }
