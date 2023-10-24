@@ -1,4 +1,7 @@
+const { default: SystemInfoUtil } = require("./tools")
+
 // app.ts
+
 App({
   buf2hex: function (buffer) {
     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('')
@@ -21,6 +24,9 @@ App({
 		return hexArr.join('')
 		},
   onLaunch() {
+    SystemInfoUtil.init();
+    
+
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

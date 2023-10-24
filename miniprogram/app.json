@@ -15,5 +15,10 @@
     "navigationBarTitleText": "笔随我动",
     "navigationBarTextStyle": "black"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "为了给您提供更好的服务，请授权您的地理位置信息"
+    }
+  },
   "sitemapLocation": "sitemap.json"
 }

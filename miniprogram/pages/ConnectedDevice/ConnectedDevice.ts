@@ -1,4 +1,5 @@
 // pages/ConnectedDevice/ConnectedDevice.ts
+const app = getApp()
 Component({
 
 	/**
