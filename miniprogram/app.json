@@ -6,7 +6,8 @@
 		"pages/logs/logs",
 		"pages/characterList/characterList",
     "pages/device/device",
-    "pages/AddDevice/AddDevice"
+    "pages/AddDevice/AddDevice",
+    "pages/DeviceDetails/DeviceDetails"
 		
 	],
   "window": {
