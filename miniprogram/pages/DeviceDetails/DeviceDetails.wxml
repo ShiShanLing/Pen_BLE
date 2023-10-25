@@ -1,0 +1,54 @@
+<!--pages/DeviceDetails.wxml-->
+<view class="container">
+  <scroll-view class="scroll" scroll-y>
+    <view class="item-box" bind:tap="toDeviceDetails">
+      <view class="pen-content">
+        <van-row>
+          <van-col span="16">
+            <van-icon class="pen-icon" name="edit" style="margin-top: 7px;" />
+            <label class="pen-name">电子笔名称</label>
+            <van-icon class="refresh-btn" name="replay" />
+          </van-col>
+          <view class="pen-connect-state-box">
+
+            <label class="text">NO</label>
+            <van-switch class="switch" checked="{{ checked }}" size="20px" />
+          </view>
+          <!-- pen-connect-state-box -->
+        </van-row>
+        <van-row>
+          <view class="pen-sydl-box">
+            <image class="pen-sydl-state" src="../../images/dl.png"></image>
+            <text class="pen-sydl-text">100% 未充电</text>
+            <text class="isConnect-tag">未连接</text>
+          </view>
+        </van-row>
+        <van-cell class="nib-strength-adjust" value="25" title="笔尖信号强度调节" is-link />
+
+      </view>
+   
+    </view>
+    <view class="item-box">
+      <view class="pen-content func-change-content">
+        <van-cell-group title="上按键功能" title-class="van-cell-title">
+          <van-cell title="单按" value="内容" is-link />
+          <van-cell title="双按" value="内容" is-link />
+          <van-cell title="长按" value="内容" is-link />
+        </van-cell-group>
+      </view>
+    </view>
+    <view class="item-box">
+      <view class="pen-content func-change-content">
+        <van-cell-group title="下按键功能" title-class="van-cell-title">
+          <van-cell title="单按" value="内容" is-link />
+          <van-cell title="双按" value="内容" is-link />
+          <van-cell title="长按" value="内容" is-link />
+        </van-cell-group>
+      </view>
+    </view>
+  
+
+
+  </scroll-view>
+
+</view>
