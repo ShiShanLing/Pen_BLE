@@ -105,5 +105,17 @@ Component({
 deviceid会发生变化 不可靠 但是已经存储的设备需要使用这个ID连接
 
 那么advertisServiceUUIDs呢? 暂时定为他不会变
-
+添加的数据结构
+[{
+  name:"",
+  divId:"",
+  advertisServiceUUIDs:serid
+}]
+RSSI: -53
+advertisData: ""
+advertisServiceUUIDs: Array(2)
+connectable: true
+deviceId: "4DA926D6-0A9B-6C89-5B8D-CA5660D04C01"
+localName: "Pencil"
+name: "Pencil"
 */

@@ -53,7 +53,7 @@ Component({
           }
           //判断列表中有没有当前设备
           for (var i = 0; i < that.data.devicesList.length; i++) {
-            console.log("(devices.devices[0].deviceId==", devices.devices[0]);
+     
             
             if (devices.devices[0].deviceId == that.data.devicesList[i].deviceId) {
               console.log("1111111111111111");
@@ -65,6 +65,7 @@ Component({
               isnotexist = false
               break;
             }
+            
             if(!devices.devices[0].advertisServiceUUIDs?.length){
               console.log("33333333333333333333333");
               isnotexist = false
@@ -80,10 +81,16 @@ Component({
               const serviceUUID = advertisServiceUUIDs[index];
               //找到 FA30就添加设备 停止循环
               if (serviceUUID.indexOf('FA30') != -1){
+                console.log("devices.devices[0]", devices.devices[0]);
                 that.data.devicesList.push(devices.devices[0])
                 break;
               }
             }
+          }else if(devices.devices[0].name=="Pencil"&&!devices.devices[0].advertisServiceUUIDs?.length){
+            //到了这里说明没有advertisServiceUUIDs需要重新搜索
+            console.log("advertisServiceUUIDs", devices.devices[0]);
+            that.stopSearchBLEDevices();
+            that.beginSearch();
           }
         }
         that.setData({
@@ -191,9 +198,10 @@ Component({
             icon: 'success',
             duration: 1000
           })
-          wx.navigateTo({
-            url: '../device/device?connectedDeviceId=' + deviceId + '&name=' + "Pencli"
-          })
+          //开始连接 并且保存设备
+          // wx.navigateTo({
+          //   url: '../device/device?connectedDeviceId=' + deviceId + '&name=' + "Pencli"
+          // })
         },
         fail: function (res) {
           console.log(res)
@@ -238,6 +246,44 @@ Component({
           })
         }
       })
-    }
+    },
+    storageDeviceId(device:any){
+      console.log("storageDeviceId");
+      // wx.getStorage({
+      //   key: "deviceId",
+      //   success(res) {
+      //     console.log("wx.getStorage==-success", res.data);
+      //     let tempList = res.data
+      //     if(tempList){
+      //       for (const index in deviceIds) {
+      //         const element = deviceIds[index];
+      //         if (tempList.indexOf(element) == -1){
+      //           tempList.push(element);
+      //         }
+      //       }
+      //     }else{
+      //       tempList = deviceIds
+      //     }
+      //     console.log("查看存储成功的设备--", tempList);
+        
+          
+      //     wx.setStorage({
+      //       key:'deviceId',
+      //       data: tempList,
+      //     })
+        
+      //   },
+      //   fail(result){
+      //     console.log("wx.getStorage==-fail", result);
+      //     wx.setStorage({
+      //       key:'deviceId',
+      //       data: deviceIds,
+      //     })
+      //   }
+        
+      // })
+    
+    
+    },
 	}
 })

@@ -66,7 +66,7 @@ Component({
 				interactive = "长按"
 			} 
 			this.setData({
-				pickerTitle:`设置 "${key}" 的 "${interactive}" 功能`
+				pickerTitle:`设置"${interactive}${key}"`
 			})
 		},
 		//获取按键功能 以及鼻尖强度
