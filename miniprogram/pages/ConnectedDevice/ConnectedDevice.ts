@@ -34,7 +34,7 @@ Component({
       getConnectedDevices(){
         var that = this
         wx.getStorage({
-          key: "deviceId",
+          key: "deviceList",
           success(res) {
             console.log("wx.getStorage==-success", res.data);
             let tempList:any[] = [];
@@ -88,7 +88,7 @@ Component({
       getStorageDeviceInfo(){
         var that = this
         wx.getStorage({
-          key: "connectedDeviceList",
+          key: "deviceList",
           success(res) {
             console.log("wx.getStorage==-success", res.data);
           },

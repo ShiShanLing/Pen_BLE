@@ -247,13 +247,14 @@ Component({
           })
         }
       })
-    },
+		},
+		//这里需要写一个测试数据--测试存储是否正常-每次进入页面都删除
     storageDeviceInfo(device:any){
 			console.log("storageDeviceId", device);
 			let self = this;
 			//这里需要直接存储对象--
       wx.getStorage({
-        key: "deviceId",
+        key: "deviceList",
         success(res) {
           console.log("wx.getStorage==-success", res.data);
           let tempList:any[] = res.data
@@ -264,7 +265,7 @@ Component({
           }
           console.log("查看存储成功的设备--", tempList);
           wx.setStorage({
-            key:'deviceId',
+            key:'deviceList',
 						data: tempList,
 						success:function(){
 							// 存储成功
@@ -279,7 +280,7 @@ Component({
 					//如果读取失败那就是空的
           console.log("wx.getStorage==-fail", result);
           wx.setStorage({
-            key:'deviceId',
+            key:'deviceList',
 						data: [device],
 						success:function(){
 							// 存储成功

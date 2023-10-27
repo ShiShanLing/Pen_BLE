@@ -25,13 +25,8 @@ App({
 		},
   onLaunch() {
     SystemInfoUtil.init();
-    
-
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+		//每次启动都删除一下本地数据;
+		wx.removeStorage({key: "deviceList"})
     // 登录
     wx.login({
       success: res => {
