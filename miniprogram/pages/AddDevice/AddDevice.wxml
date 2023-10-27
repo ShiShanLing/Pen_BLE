@@ -1,7 +1,7 @@
 <view class="container">
   <scroll-view scroll-y class="scroll">
-    <block wx:for="{{devicesList}}" wx:key="deviceId">
-      <view class="list-item" id="{{item.deviceId}}" bindtap="onCollPencli">
+    <block wx:for="{{devicesList}}"  wx:for-index="index">
+      <view class="list-item" id="{{index}}" bindtap="onCollPencli">
         <view style="display:flex;flex-direction:column;width:80%">
           <text style="font-size:medium;word-break:break-all">设备名称: {{item.name}}</text>
           <text style="font-size:x-small;color:gray;word-break:break-all">设备ID: {{item.deviceId}}</text>

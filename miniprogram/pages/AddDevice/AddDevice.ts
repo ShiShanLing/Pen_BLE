@@ -17,7 +17,7 @@ Component({
 	data: {
     searching: false,
     devicesList: [] as any[],
-    searchTime:0 
+    searchTime:0 as any
 	},
 	/**
 	 * 组件的方法列表
@@ -181,10 +181,13 @@ Component({
         clearTimeout(that.data.searchTime);
        that.stopSearchBLEDevices()
       }
-    },
+		},
+		//我想要的不只是一个id而是整个设备对象
     onCollPencli(e:any){
-      // let deviceId = "4DA926D6-0A9B-6C89-5B8D-CA5660D04C01";
-      let deviceId = e.currentTarget.id;
+			let self = this;
+			// let deviceId = "4DA926D6-0A9B-6C89-5B8D-CA5660D04C01";
+			let index = e.currentTarget.id;
+      let deviceId = this.data.devicesList[index].deviceId;
       console.log("deviceId==", deviceId);
       //e.currentTarget.id
       //开始链接
@@ -197,11 +200,9 @@ Component({
             title: '连接成功',
             icon: 'success',
             duration: 1000
-          })
+					})
+					self.storageDeviceInfo(self.data.devicesList[index])
           //开始连接 并且保存设备
-          // wx.navigateTo({
-          //   url: '../device/device?connectedDeviceId=' + deviceId + '&name=' + "Pencli"
-          // })
         },
         fail: function (res) {
           console.log(res)
@@ -247,41 +248,47 @@ Component({
         }
       })
     },
-    storageDeviceId(device:any){
-      console.log("storageDeviceId");
-      // wx.getStorage({
-      //   key: "deviceId",
-      //   success(res) {
-      //     console.log("wx.getStorage==-success", res.data);
-      //     let tempList = res.data
-      //     if(tempList){
-      //       for (const index in deviceIds) {
-      //         const element = deviceIds[index];
-      //         if (tempList.indexOf(element) == -1){
-      //           tempList.push(element);
-      //         }
-      //       }
-      //     }else{
-      //       tempList = deviceIds
-      //     }
-      //     console.log("查看存储成功的设备--", tempList);
+    storageDeviceInfo(device:any){
+			console.log("storageDeviceId", device);
+			let self = this;
+			//这里需要直接存储对象--
+      wx.getStorage({
+        key: "deviceId",
+        success(res) {
+          console.log("wx.getStorage==-success", res.data);
+          let tempList:any[] = res.data
+          if(tempList as any[]){
+						tempList.push(device);
+          }else{
+            tempList = [device];
+          }
+          console.log("查看存储成功的设备--", tempList);
+          wx.setStorage({
+            key:'deviceId',
+						data: tempList,
+						success:function(){
+							// 存储成功
+							wx.navigateBack();
+						}
+					})
+					
+
         
-          
-      //     wx.setStorage({
-      //       key:'deviceId',
-      //       data: tempList,
-      //     })
+        },
+        fail(result){
+					//如果读取失败那就是空的
+          console.log("wx.getStorage==-fail", result);
+          wx.setStorage({
+            key:'deviceId',
+						data: [device],
+						success:function(){
+							// 存储成功
+							wx.navigateBack();
+						},
+          })
+        }
         
-      //   },
-      //   fail(result){
-      //     console.log("wx.getStorage==-fail", result);
-      //     wx.setStorage({
-      //       key:'deviceId',
-      //       data: deviceIds,
-      //     })
-      //   }
-        
-      // })
+      })
     
     
     },
