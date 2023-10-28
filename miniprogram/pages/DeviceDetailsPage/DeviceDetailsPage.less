@@ -1,4 +1,4 @@
-/* pages/ConnectedDevice/ConnectedDevice.wxss */
+/* pages/DeviceDetails.wxss */
 page {
   background-color: #f8f8f8;
   // background-color: red;
@@ -9,7 +9,6 @@ page {
 
 @main-color: #1989fa;
 
-
 .container {
   background-color: rgb(231, 231, 231);
   padding: 0rpx;
@@ -18,54 +17,130 @@ page {
 
   .scroll {
     width: 100%;
-    height: 100%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 10px;
+    height: auto;
     // background-color: red;
   }
 
-  //添加设备的按钮
-  .addItem {
+  //展示设备的cell
+  .item-box {
     background-color: rgb(231, 231, 231);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     width: auto;
-    height: 100px;
+    height: auto;
     padding: 3px 8px;
 
-    .content {
+    .pen-content {
+      position: relative;
+      overflow: hidden;
       background-color: white;
       flex: 1;
-      width: 100%;
-      // background-color: orange;
       border-radius: 15px;
-      border: 1px solid rgba(255, 165, 0, 0.5);
+      border: 1px solid rgba(0, 0, 255, 0.5);
       display: flex;
       flex-direction: column;
-      align-items: center;
+      padding: 10px 20px;
+      align-items: left;
 
-      .item {
+      .pen-icon {
+        margin-right: 10px;
+        color: #1989fa;
+        font-size: 20px;
+        margin-left: 5px;
+        // background-color: red;
+        // margin-top: 5rpx;
+      }
+
+      .pen-name {
+        font-size: 16px;
+
+
+      }
+
+      .refresh-btn {
+        margin-left: 8px;
+
+        padding: 8x;
+        font-size: 18px;
+      }
+
+      .pen-connect-state-box {
+
         display: flex;
         flex-direction: row;
         align-items: center;
-        width: 150px;
-        height: 50px;
-        margin-top: 25px;
-        position: relative;
-
-        .icon {
-          font-size: 18px;
-          margin-left: 35px;
-        }
+        position: absolute;
+        right: 15px;
+        top: 17.5px;
 
         .text {
-          margin-left: 10px;
           font-size: 16px;
+          margin-right: 7.5px;
+          line-height: 20px;
+
+          // background-color: red;
+        }
+
+        .switch {
+          // background-color: red;
+          padding: 0;
+          margin: 0;
+          margin-bottom: 0;
+
+        }
+
+      }
+
+      .pen-sydl-box {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        //剩余电量
+        .pen-sydl-state {
+          // background-image: url('../../images/dl.png');
+
+          width: 25px;
+          height: 25px;
+          // background-color: red;
+        }
+
+        .pen-sydl-text {
+          flex: 1;
+          margin-left: 10px;
+          font-size: 14px;
+          line-height: 25px;
+          height: 25px;
+
+          color: rgb(81, 81, 81);
+        }
+
+        .isConnect-tag {
+          border: 1.2px solid @main-color;
           color: @main-color;
+          padding: 1px 2px;
+          font-size: 13px;
+          text-align: center;
+
         }
       }
+
+      //笔尖强度调整
+      .nib-strength-adjust {
+        margin-left: -20px;
+        margin-top: 10px;
+        margin-right: -20px;
+        margin-bottom: -10px;
+        border-radius: 15px 15px 15px 15px;
+      }
+    }
+
+    .func-change-content {
+      padding: 0px 0px;
+
     }
 
   }
@@ -85,7 +160,7 @@ page {
 
       background-color: white;
       flex: 1;
-
+      overflow: hidden;
       // background-color: orange;
       border-radius: 15px;
       border: 1px solid rgba(138, 138, 138, 0.5);
@@ -93,12 +168,14 @@ page {
       flex-direction: column;
       padding: 10px 20px;
       align-items: left;
-      .pen-info-box{
+
+      .pen-info-box {
         width: 100%;
         position: relative;
         display: flex;
         flex-direction: row;
         align-items: center;
+
         .pen-icon {
           margin-right: 10px;
           margin-top: 0px;
@@ -111,58 +188,59 @@ page {
           // background-color: red;
           // margin-top: 5rpx;
         }
-  
+
         .icon-dark {
           background-image: url('../../images/pencil-hui.png');
           background-size: 20px 20px;
-  
+
         }
-  
+
         .pen-name {
           font-size: 16px;
           margin-left: 5px;
           font-size: 18px;
           max-width: 100px;
-  
-  
+
+
         }
-  
+
         .refresh-btn {
           margin-left: 10px;
           padding: 5px;
-        background-color: red;
+          background-color: red;
           padding: 8px;
           font-size: 20px;
         }
-  
+
         .pen-connect-state-box {
-  
+
           display: flex;
           flex-direction: row;
           align-items: center;
           position: absolute;
           right: 0px;
           top: 10px;
-  
+
           .text {
             font-size: 16px;
             margin-right: 0px;
             line-height: 20px;
-  
+
             // background-color: red;
           }
-  
+
           .switch {
             padding: 7.5px;
             // background-color: red;
             margin: 0;
             margin-bottom: 0;
-  
+
           }
-  
+
         }
 
       }
+
       //剩余电量
       .pen-sydl-box {
         width: 100%;
@@ -200,9 +278,19 @@ page {
         }
       }
 
+      //笔尖强度调整
+      .nib-strength-adjust {
+        margin-left: -20px;
+        margin-top: 10px;
+        margin-right: -20px;
+        margin-bottom: -10px;
+        border-radius: 15px 15px 15px 15px;
+      }
+
     }
-    .connected{
-      border: 1px solid rgba(25, 137, 250, 0.6) ;
+
+    .connected {
+      border: 1px solid rgba(25, 137, 250, 0.6);
       ;
     }
   }
@@ -212,6 +300,10 @@ page {
   }
 }
 
-// .container:first-child{
-//   padding-top: 7rpx;
-// }
+.selectPicker {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}

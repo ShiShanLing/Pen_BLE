@@ -15,8 +15,6 @@
             <van-switch class="switch" data-connection='{{item.isConnection}}' data-devId='{{item.deviceId}}' catch:tap="onClickSwitchBLEState" checked="{{item.isConnection}}" size="20px" />
           </view>
         </div>
-
-          
           <!-- pen-connect-state-box -->
         </van-row>
         <van-row>
@@ -28,57 +26,15 @@
         </van-row>
         
       </view>
-    </view>
+  </view>
   <view class="addItem" bind:tap="onAddDevice">
       <view class="content">
         <view class="item" >
           <van-icon class="icon" name="add-o" color="#1989fa" />
           <label class="text">添加设备</label>
-          
         </view>
       </view>
     </view>
-    <view class="addItem" bind:tap="onAddDevice">
-      <view class="content">
-        <view class="item" >
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-    <view class="addItem" bind:tap="onAddDevice">
-      <view class="content">
-        <view class="item" >
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-    <view class="addItem" bind:tap="onAddDevice">
-      <view class="content">
-        <view class="item" >
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-    <view class="addItem" bind:tap="onAddDevice">
-      <view class="content">
-        <view class="item" >
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-    <view class="addItem" bind:tap="onAddDevice">
-      <view class="content">
-        <view class="item" >
-          <van-icon class="icon" name="add-o" color="#1989fa" />
-          <label class="text">添加设备</label>
-        </view>
-      </view>
-    </view>
-  
 </div>
 
 </view>

@@ -34,7 +34,8 @@ App({
         console.log(res.code)
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       },
-		})
+    })
+ 
 		this.globalData.SystemInfo = wx.getSystemInfoSync()
 	},
   globalData: {SystemInfo: {}},
@@ -43,5 +44,6 @@ App({
   serveId:"",
   characteristicId_RX:"",
   characteristicId_TX:"",
-
+  //仅用于页面传值
+  pushDetialsDevice:{}
 })

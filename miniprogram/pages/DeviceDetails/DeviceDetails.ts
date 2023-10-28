@@ -7,13 +7,14 @@ Component({
 	 * 组件的属性列表
 	 */
 	properties: {
-
+    deviceInfo:Object
 	},
 
 	/**
 	 * 组件的初始数据
 	 */
 	data: {
+    deviceInfo:Object,
 			columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
 			isShowPicker:false,
 			//数据类型 key:1 上键 2下键, func:1 单击 2双击 3长按
@@ -33,6 +34,11 @@ Component({
 	 * 组件的方法列表
 	 */
 	methods: {
+    onShow: function () {
+      let self = this;
+      console.log("self.properties.deviceInfo==", self.properties.deviceInfo);
+
+    },
 		//展示功能选择器
 		onShowPicker(event:any){
 			

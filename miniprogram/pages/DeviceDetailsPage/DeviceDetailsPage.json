@@ -1,5 +1,4 @@
 {
-  "component": true,
 	"usingComponents": {
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
@@ -7,6 +6,8 @@
     "van-icon": "@vant/weapp/icon/index",
     "van-row": "@vant/weapp/row/index",
     "van-col": "@vant/weapp/col/index",
-    "van-switch": "@vant/weapp/switch/index"
+		"van-switch": "@vant/weapp/switch/index",
+		"van-picker": "@vant/weapp/picker/index",
+		"van-popup": "@vant/weapp/popup/index"
   }
 }

@@ -1,25 +1,23 @@
 {
-  "pages": [
-    "pages/ConnectedDevice/ConnectedDevice",
-    "pages/search/search",
-    "pages/index/index",
-		"pages/logs/logs",
-		"pages/characterList/characterList",
-    "pages/device/device",
-    "pages/AddDevice/AddDevice",
-    "pages/DeviceDetails/DeviceDetails"
+	"pages": [
+    "pages/ConnectedDevicePage/ConnectedDevicePage",
+    "pages/DeviceDetailsPage/DeviceDetailsPage",
+	
+		"pages/index/index",
+		"pages/AddDevice/AddDevice",
+		"pages/DeviceDetails/DeviceDetails"
 		
 	],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "笔随我动",
-    "navigationBarTextStyle": "black"
-  },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "为了给您提供更好的服务，请授权您的地理位置信息"
-    }
-  },
-  "sitemapLocation": "sitemap.json"
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "笔随我动",
+		"navigationBarTextStyle": "black"
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "为了给您提供更好的服务，请授权您的地理位置信息"
+		}
+	},
+	"sitemapLocation": "sitemap.json"
 }
