@@ -56,7 +56,7 @@ Component({
      
             
             if (devices.devices[0].deviceId == that.data.devicesList[i].deviceId) {
-              console.log("1111111111111111");
+     
               isnotexist = false
               break;
             }
@@ -67,13 +67,13 @@ Component({
             }
             
             if(!devices.devices[0].advertisServiceUUIDs?.length){
-              console.log("33333333333333333333333");
+      
               isnotexist = false
               break;
             }
           }
           
-          console.log("isnotexist==", isnotexist);
+ 
           //如果列表中没有 再判断 advertisServiceUUIDs 中有没有想要的设备 
           if(devices.devices[0].advertisServiceUUIDs?.length && isnotexist){
             let advertisServiceUUIDs = devices.devices[0].advertisServiceUUIDs
@@ -82,6 +82,7 @@ Component({
               //找到 FA30就添加设备 停止循环
               if (serviceUUID.indexOf('FA30') != -1){
                 console.log("devices.devices[0]", devices.devices[0]);
+                devices.devices[0].advertisServiceUUIDs = [serviceUUID]
                 that.data.devicesList.push(devices.devices[0])
                 break;
               }
@@ -184,11 +185,17 @@ Component({
 		},
 		//我想要的不只是一个id而是整个设备对象
     onCollPencli(e:any){
+      wx.showLoading({
+        title: '正在连接...',
+      })
 			let self = this;
 			// let deviceId = "4DA926D6-0A9B-6C89-5B8D-CA5660D04C01";
-			let index = e.currentTarget.id;
-      let deviceId = this.data.devicesList[index].deviceId;
-      console.log("deviceId==", deviceId);
+      let index = e.currentTarget.id;
+      let deviceObjc = this.data.devicesList[index]; 
+      let deviceId = deviceObjc.deviceId;
+      console.log("deviceObjc==", deviceObjc);
+      // self.storageDeviceInfo(deviceObjc)
+      // return;
       //e.currentTarget.id
       //开始链接
       wx.createBLEConnection({
@@ -200,8 +207,9 @@ Component({
             title: '连接成功',
             icon: 'success',
             duration: 1000
-					})
-					self.storageDeviceInfo(self.data.devicesList[index])
+          })
+          app.currentConDevId = deviceId;
+					self.storageDeviceInfo(deviceObjc)
           //开始连接 并且保存设备
         },
         fail: function (res) {
@@ -212,28 +220,6 @@ Component({
             content: '连接失败',
             showCancel: false
           })
-        }
-      })
-    },
-    getDeviceServices(deviceObjc:any){
-      console.log("deviceObjc==", deviceObjc);
-      
-      let that = this;
-      wx.getBLEDeviceServices({
-        deviceId: deviceObjc.deviceId,
-        success: function (res) {
-          console.log("getBLEDeviceServices-success==",  res);
-          let tempSers = res.services
-          for (let index = 0; index < tempSers.length; index++) {
-            if (tempSers[index].uuid.indexOf('FA30') != -1){
-              that.data.devicesList.push(deviceObjc)
-              break;
-            } 
-          }
-        },
-        fail:function(error){
-          console.log('getBLEDeviceServices-error===', error);
-          
         }
       })
     },
@@ -258,23 +244,39 @@ Component({
         success(res) {
           console.log("wx.getStorage==-success", res.data);
           let tempList:any[] = res.data
+          let isHave = false;
+          let newList = [...tempList];
           if(tempList as any[]){
-						tempList.push(device);
+            for (const key in newList) {
+              const element = newList[key];
+                if (element.deviceId == device.deviceId){
+                  isHave = true;
+                }
+            }
+            if (!isHave){
+              newList.push(device);
+            }
           }else{
-            tempList = [device];
+            newList = [device];
           }
-          console.log("查看存储成功的设备--", tempList);
-          wx.setStorage({
-            key:'deviceList',
-						data: tempList,
-						success:function(){
-							// 存储成功
-							wx.navigateBack();
-						}
-					})
-					
-
-        
+          console.log("查看存储成功的设备--", tempList, newList);
+          if (tempList.length != newList.length){
+            wx.setStorage({
+              key:'deviceList',
+              data: tempList,
+              success:function(){
+                console.log("存储成功");
+                self.stopSearchBLEDevices();
+                // 存储成功
+                wx.navigateBack();
+              }
+            })
+          }else{
+            self.stopSearchBLEDevices();
+            // 设备已存在
+            wx.navigateBack();
+          }
+ 
         },
         fail(result){
 					//如果读取失败那就是空的
@@ -283,7 +285,9 @@ Component({
             key:'deviceList',
 						data: [device],
 						success:function(){
-							// 存储成功
+              console.log("存储成功");
+              // 存储成功
+              self.stopSearchBLEDevices();
 							wx.navigateBack();
 						},
           })

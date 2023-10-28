@@ -175,19 +175,6 @@ Page({
   },
   AddNotify: function (deviceId, serviceId, characteristicId) {
     var that = this
-    const mtu = 128
-    // wx.setBLEMTU({
-    // 	deviceId: deviceId,
-    // 	mtu: 128,
-    // 	success:(value)=>{
-    // 		console.log("setBLEMTU成功", value);
-    // 	},
-    // 	fail:(value)=>{
-    // 		console.log("setBLEMTU失败", value);
-    // 	}
-    // })
-
-
 		console.log("添加监听", deviceId, serviceId, characteristicId);
     wx.notifyBLECharacteristicValueChange({
       state: true,
@@ -265,29 +252,6 @@ Page({
 				console.log("dqdl===", dqdl);
 				let nnnewBuffer = hex2ArrayBuffer(dqdl)
 				console.log("nnnewBuffer==", nnnewBuffer);
-				let testBuffer = new ArrayBuffer(20)
-				let dataView = new DataView(testBuffer)
-				dataView.setUint8(0,0xA1)
-				dataView.setUint8(1, 0x21)
-				dataView.setUint8(2, 0x20)
-				dataView.setUint8(3, 0x02)
-				dataView.setUint8(4, 0x03)
-				dataView.setUint8(5, 0x02)
-				dataView.setUint8(6, 0x04)
-				dataView.setUint8(7, 0x00)
-				dataView.setUint8(8, 0x00)
-				dataView.setUint8(9, 0x00)
-				dataView.setUint8(10, 0x00)
-				dataView.setUint8(11, 0x00)
-				dataView.setUint8(12, 0x00)
-				dataView.setUint8(13, 0x00)
-				dataView.setUint8(14, 0x00)
-				dataView.setUint8(15, 0x00)
-				dataView.setUint8(16, 0x00)
-				dataView.setUint8(17, 0x00)
-				dataView.setUint8(18, 0x00)
-				dataView.setUint8(19, 0x09)
-				console.log("testBuffer==", testBuffer);
 				//写入数据 
 				console.log("写入数据--", that.data.connectedDeviceId, sId, FA31);
 				wx.writeBLECharacteristicValue({

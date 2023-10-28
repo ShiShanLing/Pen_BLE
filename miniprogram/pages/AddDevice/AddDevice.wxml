@@ -1,6 +1,6 @@
 <view class="container">
   <scroll-view scroll-y class="scroll">
-    <block wx:for="{{devicesList}}"  wx:for-index="index">
+    <block wx:for="{{devicesList}}"  wx:for-index="index" wx:key="index" >
       <view class="list-item" id="{{index}}" bindtap="onCollPencli">
         <view style="display:flex;flex-direction:column;width:80%">
           <text style="font-size:medium;word-break:break-all">设备名称: {{item.name}}</text>

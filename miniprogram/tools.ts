@@ -13,7 +13,7 @@ export default class SystemInfoUtil {
   static wxSDKVersion:any;
  
   static init() {
-    wx.getSystemInfo({
+    wx.getSystemInfoAsync({
       success: function(res) {
         if (res.platform == "devtools") {
           SystemInfoUtil.platform = SystemInfoUtil.PC;

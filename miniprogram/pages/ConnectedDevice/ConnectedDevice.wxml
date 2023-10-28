@@ -1,35 +1,8 @@
 <!--pages/ConnectedDevice/ConnectedDevice.wxml-->
 <view class="container">
   <scroll-view class="scroll" scroll-y>
-  
-    <view class="showPencilItem" bind:tap="toDeviceDetails">
-      <view class="content">
-        <van-row>
-
-          <van-col span="16" >
-            <van-icon class="pen-icon" name="edit" style="margin-top: 7px;"/>
-            <label class="pen-name">电子笔名称</label>
-            <van-icon class="refresh-btn" name="replay"/>
-          </van-col>
-          <view class="pen-connect-state-box">
-
-            <label class="text">NO</label>
-            <van-switch class="switch" checked="{{ checked }}" size="20px" />
-          </view>
-          <!-- pen-connect-state-box -->
-        </van-row>
-        <van-row>
-        <view class="pen-sydl-box">
-          <image class="pen-sydl-state" src="../../images/dl.png" ></image>
-            <text class="pen-sydl-text">100% 未充电</text>
-            <text class="isConnect-tag">未连接</text>
-        </view>
-         
-        </van-row>
-      </view>
-    </view>
-
-    <view class="addItem" bind:tap="addDev">
+  {{app.currentConDevId}}
+  <view class="addItem" bind:tap="onAddDevice">
       <view class="content">
         <view class="item" >
           <van-icon class="icon" name="add-o" color="#1989fa" />
@@ -37,6 +10,32 @@
         </view>
       </view>
     </view>
+    <view class="showPencilItem" wx:for="{{deviceList}}" wx:for-index="index" wx:key="index" wx:for-item="item" bind:tap="toDeviceDetails">
+      <view class="content">
+        <van-row >
+          <van-col span="16" >
+            <van-icon class="pen-icon" name="edit" style="margin-top: 7px;"/>
+            <label class="pen-name">{{item.name}}</label>
+            <van-icon class="refresh-btn" name="replay"/>
+          </van-col>
+          <view class="pen-connect-state-box">
+            <label class="text">{{item.isConnection ? "YES":"NO"}}</label>
+            <van-switch class="switch" data-devId='{{item.deviceId}}' catch:tap="onClickSwitchBLEState" checked="{{(item.isConnection)}}" size="20px" />
+          </view>
+          <!-- pen-connect-state-box -->
+        </van-row>
+        <van-row>
+        <view class="pen-sydl-box">
+          <image class="pen-sydl-state" src="../../images/dl.png" ></image>
+            <text class="pen-sydl-text">100% 未充电</text>
+            <text class="isConnect-tag">{{item.isConnection ? "已连接":"未连接"}}</text>
+        </view>
+         
+        </van-row>
+      </view>
+    </view>
+
+ 
    
   
   </scroll-view>
