@@ -18,8 +18,9 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad() {
-    if (SystemInfoUtil.platform == "android") {
-      wx.authorize({ scope: "" })
+    console.log("SystemInfoUtil.platform==", SystemInfoUtil.platform);
+    
+    wx.authorize({ scope: "" })
       wx.getLocation({
         type: 'gcj02', //默认为 wgs84 返回 gps 坐标，gcj02 返回可用于wx.openLocation的坐标
         success: (res) => {
@@ -29,8 +30,6 @@ Page({
           console.log(err)
         }
       })
-
-    }
     //申请蓝牙权限
     wx.authorize({ scope: "scope.bluetooth" })
     let self = this;
@@ -88,20 +87,27 @@ Page({
     })
     this.data.bleMannage.bleReceiveValue = function (value) {
       console.log("bleReceiveValue-回调--", value);
-      let hexStr = value
-      let hexStrList = hexStr.match(/[\da-f]{2}/gi)!
+        let hexStr = value
+        if (hexStr.length < 40) {
+          //不是我想要的数据
+          return;
+        }
+        let hexStrList = hexStr.match(/[\da-f]{2}/gi)!
         console.log("hexStrList===", hexStrList);
-      //获取当前连接的设备设置他的电量和充电状态
-      if (hexStrList.length == 20) {
-       
-        let Battery = '0x' + hexStrList[3];
+        if (hexStrList.length != 20) {
+          //不是我想要的数据
+          return;
+        }
+        //获取当前连接的设备设置他的电量和充电状态
+        //充电状态
+        if (hexStr.indexOf("a103") != -1) {
+          let Battery = parseInt(hexStrList[3], 16);
         let state = hexStrList[4];
-        Battery = eval(Battery).toString(10)
         console.log(Battery, state);
         let newList = [...self.data.deviceList];
         newList.forEach((dev) => {
           if (dev.deviceId == app.currentConDevId) {
-            dev["battery"] = Number(Battery) + '%'
+            dev["battery"] = Battery + '%'
             dev["chargingState"] =  Number(state) == 1 ?"充电中":"未充电"
           }
         })
@@ -110,6 +116,14 @@ Page({
           deviceList:newList
         })
         console.log("获取到电量", self.data.deviceList);
+   
+        }
+
+
+      //获取当前连接的设备设置他的电量和充电状态
+      if (hexStrList.length == 20) {
+       
+      
         
       }
     }
@@ -209,7 +223,11 @@ Page({
           duration: 1000
         })
         app.currentConDevId = devId;
+        console.log("self.data.deviceList==", self.data.deviceList);
+        
         self.data.deviceList.forEach((dev)=>{
+          console.log("dev.deviceId==", dev.deviceId, '----', devId);
+          
           if (dev.deviceId == devId){
             dev["isConnection"] = true;
           }else{
@@ -217,15 +235,9 @@ Page({
           }
         })
         console.log("连接成功查看数据", self.data.deviceList);
-        
-        //获取连接设备的服务id和特征id
-
-        /*
-          currentConDevId:"",
-serveId:"",
-characteristicId_RX:"",
-characteristicId_TX:"",
-        */
+        self.setData({
+          deviceList:self.data.deviceList
+        })
         self.data.bleMannage.getDeviceServeIdAndCharacteristicId(devId, ((serveId: string, RX: string, TX: string) => {
           console.log('获取特征ID成功--', `serveId=${serveId}  RX==${RX} TX==${TX}`);
           app.serveId = serveId;

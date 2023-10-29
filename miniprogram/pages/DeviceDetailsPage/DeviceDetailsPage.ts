@@ -9,10 +9,9 @@ Page({
    */
   data: {
     deviceInfo: {} as any,
-    columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
     //是否展示修改按键功能picker
     isShowPicker: false,
-    nibStrength: -1,
+    nibStrength: -100,
     //改变的value
     nibChangeValue: 0,
     //数据类型 key:0 上键 1下键, func:1 单击 2双击 3长按
@@ -105,12 +104,8 @@ Page({
       if (hexStr.indexOf("a103") != -1) {
         //电量和充电状态
         console.log("获取到电量", hexStrList);
-        let Battery = '0x' + hexStrList[3];
-        Battery = eval(Battery).toString(10)
-
         let state = hexStrList[4];
-        console.log(Battery, state);
-        self.data.deviceInfo["battery"] = Number(Battery) + '%';
+        self.data.deviceInfo["battery"] = parseInt(hexStrList[3], 16) + '%';
         self.data.deviceInfo["chargingState"] = Number(state) == 1 ? "充电中" : "未充电"
         self.setData({
           deviceInfo: self.data.deviceInfo
@@ -132,31 +127,19 @@ Page({
         console.log("获取到按键类型", self.data.deviceInfo);
         //按键类型
         if (hexStrList[3] == '01') {//下
-          let one = '0x' + hexStrList[4];
-          one = eval(one).toString(10)
-          let two = '0x' + hexStrList[5];
-          two = eval(two).toString(10)
-          let long = '0x' + hexStrList[6]
-          long = eval(long).toString(10)
-          console.log(`01---- 单击=${one} 双击=${two} 长按=${long}`);
+
           self.setData({
-            currentBottomKey: { click: Number(one), doubleClick: Number(two), longPress: Number(long) },
-            toBottomKey: { click: Number(one), doubleClick: Number(two), longPress: Number(long) }
+            currentBottomKey: { click: parseInt(hexStrList[4], 16), doubleClick: parseInt(hexStrList[5], 16), longPress: parseInt(hexStrList[6], 16) },
+            toBottomKey: { click: parseInt(hexStrList[4], 16), doubleClick: parseInt(hexStrList[5], 16), longPress: parseInt(hexStrList[6], 16) },
           });
           //当前下按键功能 展示用-设置成功后需要刷新
           // currentBottomKey: { click: -1, doubleClick: -1, longPress: -1 },
 
         } else if (hexStrList[3] == '00') {//上
-          let one = '0x' + hexStrList[4];
-          one = eval(one).toString(10)
-          let two = '0x' + hexStrList[5];
-          two = eval(two).toString(10)
-          let long = '0x' + hexStrList[6]
-          long = eval(long).toString(10)
-          console.log(`02---- 单击=${one} 双击=${two} 长按=${long}`);
+   
           self.setData({
-            currentTopKey: { click: Number(one), doubleClick: Number(two), longPress: Number(long) },
-            toTopKey: { click: Number(one), doubleClick: Number(two), longPress: Number(long) },
+            currentTopKey: { click: parseInt(hexStrList[4], 16), doubleClick: parseInt(hexStrList[5], 16), longPress: parseInt(hexStrList[6], 16) },
+            toTopKey: { click: parseInt(hexStrList[4], 16), doubleClick: parseInt(hexStrList[5], 16), longPress: parseInt(hexStrList[6], 16) },
           });
         }
       } else if (hexStr.indexOf("a121") != -1) {
@@ -399,10 +382,10 @@ characteristicId_TX:"",
       console.log(this.data.toTopKey);
       click = this.data.toTopKey.click.toString(16);
       doubleClick = this.data.toTopKey.doubleClick.toString(16);
-      longPress = this.data.toTopKey.longPress.toString(16);
+      longPress = '00';
       CRCNum += this.data.toTopKey.click
       CRCNum += this.data.toTopKey.doubleClick
-      CRCNum += this.data.toTopKey.longPress
+
       console.log("旧版CRCNum==", CRCNum);
       let topKey = this.data.toTopKey;
 
@@ -416,10 +399,10 @@ characteristicId_TX:"",
         topKey.doubleClick = index;
         doubleClick = index.toString(16);
       } else {
-        CRCNum -= this.data.toTopKey.longPress
+   
 
-        longPress = index.toString(16);
-        topKey.longPress = index;
+      
+      
       }
       this.setData({
         toTopKey: topKey,
@@ -533,21 +516,54 @@ characteristicId_TX:"",
   },
   //恢复出厂设置
   onFactoryDataReset() {
-    let codedingStr = `A114000200000000000000000000000000000002`
+    let codedingStr = `A114100200000000000000000000000000000002`
     console.log("codedingStr===", codedingStr);
-
+    let self = this;
     Dialog.confirm({
       title: '警告!',
-      message: '确认恢复出厂设置?',
+      message: '恢复出厂设置后需要重新连接设备,确认要恢复出厂设置?',
     })
       .then(() => {
         this.data.bleMannage.writeDataToBlLEDevice(codedingStr, app.currentConDevId, app.serveId, app.characteristicId_TX);
+        self.data.bleMannage.deleteStorageDevice(app.currentConDevId, ((result)=>{
+          if(result){
+            app.currentConDevId = '';
+            app.serveId = '';
+            app.characteristicId_TX = '';
+            app.characteristicId_RX = '';
+            wx.navigateBack();
+          }
+        }))
         // on confirm
       })
       .catch(() => {
         // on cancel
       });
 
+  },
+  onDeleteDevice(){
+    let self = this;
+    Dialog.confirm({
+      title: '警告!',
+      message: '确定要删除设备吗?',
+    })
+      .then(() => {
+        //如果设备在连接状态,那么先断开连接
+        self.data.bleMannage.closeBLEConnection(app.currentConDevId)
+        self.data.bleMannage.deleteStorageDevice(app.currentConDevId, ((result)=>{
+          if(result){
+            app.currentConDevId = '';
+            app.serveId = '';
+            app.characteristicId_TX = '';
+            app.characteristicId_RX = '';
+            wx.navigateBack();
+          }
+        }))
+        // on confirm
+      })
+      .catch(() => {
+        // on cancel
+      });
   }
 
 

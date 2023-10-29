@@ -13,7 +13,8 @@
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
 		"navigationBarTitleText": "笔随我动",
-		"navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ffffff"
 	},
 	"permission": {
 		"scope.userLocation": {

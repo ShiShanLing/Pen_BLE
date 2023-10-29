@@ -36,9 +36,14 @@ export class BLEMannage {
         callback(true)
         //开始连接 并且保存设备
       },
-      fail: function (res) {
-        console.log(res)
-        callback(false)
+      fail: function (res:any) {
+        if (res.errno == "1509007"){
+          callback(true)
+        }else{
+          console.log(res)
+          callback(false)
+        }
+     
       }
     })
   }
@@ -99,29 +104,7 @@ export class BLEMannage {
   //给蓝牙写入数据
   writeDataToBlLEDevice(hexStr: string, deviceId: string, serviceId: string, characteristicId: string) {
 
-    //
-    //0xA1 0x21 LEN AA BB CC DD 00 00 00 00 00 00 00 00 00 00 00 00 CRC
-    //A121100103120100000000000000000000000016
-    /*
-  可以成功的数据:
-  A12110010B05010000000000000000000000000A
-  这里的12 是 暂停/播放 但是为什么检验位是 17
-  A121100103120100000000000000000000000017
-  */
 
-    //A1211001030C0100000000000000000000000017
-
-    // let dqdl = "A1211001030C0100000000000000000000000011"
-    // 15+22+3
-    //获取强度比
-    // let dqdl = "A125000000000000000000000000000000000000"
-    //设置强度比
-    // let dqdl = "A124000900000000000000000000000000000009"
-    //读取电量
-    // let dqdl = 'A103000000000000000000000000000000000000'
-    //读取按钮功能
-    // let dqdl = "A122000100000000000000000000000000000000"
-    // console.log("dqdl===", dqdl);
     let bufferArray = hexStrToArrayBuffer(hexStr)
     console.log("bufferArray==", bufferArray);
     wx.writeBLECharacteristicValue({
@@ -172,25 +155,34 @@ export class BLEMannage {
             deviceIds.push(serviceUUID)
           });
         }
-        // console.log("deviceIds==", deviceIds);
+        console.log("deviceIds==", deviceIds);
         wx.openBluetoothAdapter({
           success: function (res) {
             console.log(res)
             wx.getConnectedBluetoothDevices({
               services: deviceIds,
               success(res) {
+
+                console.log('获取到getConnectedBluetoothDevices---', res);
                 let newData:any[] = []
                 let ids = res.devices.map((dev) => {
                   return dev.deviceId;
                 })
+                // 0000FA30-0000-1000-8000-00805F9B34FB
+                /*
+                ["00001812-0000-1000-8000-00805F9B34FB", "0000FA30-0000-1000-8000-00805F9B34FB"]
+                */
                 //只有已连接的设备才展示在列表中
                 storageDeviceList.forEach((dev:any)=>{
                   if(ids.includes(dev.deviceId)){
                     newData.push(dev)
                   }
                 })
+                if (!ids.length){
+                  newData = storageDeviceList;
+                }
                 callback(newData)
-                // console.log('获取到的可连接的设备---', newData);
+                
               },
               fail(error) {
                 console.log("getConnectedBluetoothDevices-error==", error);
@@ -218,8 +210,73 @@ export class BLEMannage {
       }
 
     })
-
   }
+  //删除指定设备
+  deleteStorageDevice(uuid:string, callback:((result:boolean)=>void)) {
+    var self = this
+    wx.getStorage({
+      key: "deviceList",
+      success(res) {
+        console.log("wx.getStorage==-success", res.data);
+        let storageDeviceList = res.data;
+        let deviceIds: string[] = [];
+        let newList:any[] = [];
+        for (const index in storageDeviceList) {
+          const element = storageDeviceList[index];
+          if (uuid != element.deviceId){
+            newList.push(element);
+          }
+        }
+        self.storageAllDevice(newList, ((result)=>{
+            
+            callback(result)
+        }))
+        console.log("deviceIds==", deviceIds);
+      },
+      fail(result) {
+        callback(false)
+        console.log("wx.getStorage==-fail", result);
+      }
+
+    })
+  }
+  //获取所有的设备
+  getAllStorageDevice(callback:((devList:any[])=>void)){
+    wx.getStorage({
+      key: "deviceList",
+      success(res) {
+        console.log("wx.getStorage==-success", res.data);
+        let storageDeviceList = res.data;
+        callback(storageDeviceList);
+      },
+      fail(result) {
+        console.log("wx.getStorage==-fail", result);
+        callback([]);
+      }
+
+    })
+  }
+  //存储所有的设备
+  storageAllDevice(list:any[], callback:((result:boolean)=>void)){
+    wx.setStorage({
+      key:'deviceList',
+      data: list,
+      success:function(){
+        callback(true)
+      },
+      fail:function () {
+        callback(false)
+      }
+    })
+  }
+
+}
+export class  WXStorageManagement{
+//删除指定设备
+static  deleteDevice(uuid:string) {
+  wx.get
+}
+
 }
 /*
   currentConDevId:"",

@@ -194,6 +194,7 @@ Component({
       let deviceObjc = this.data.devicesList[index]; 
       let deviceId = deviceObjc.deviceId;
       console.log("deviceObjc==", deviceObjc);
+    
       // self.storageDeviceInfo(deviceObjc)
       // return;
       //e.currentTarget.id
@@ -253,29 +254,51 @@ Component({
                   isHave = true;
                 }
             }
+            let temp:any[] = [];
+            temp.includes('1')
+            //这里出现了设备id发生变化的情况 循环存储的设备 如果发现有重复的
+            let storageList:any[] = [];
+            for (const key in newList) {
+              let tempIsH = false;
+              const element = newList[key];
+              for (const adIndex in element.advertisServiceUUIDs) {
+                let serID = element.advertisServiceUUIDs[adIndex];
+                console.log("device.advertisServiceUUIDs", device.advertisServiceUUIDs);
+                console.log("serID==", serID);
+                
+                if (device.advertisServiceUUIDs.includes(serID)){
+                  tempIsH = true;
+                }
+              }
+              console.log("tempIsH===", tempIsH);
+              
+              //如果不存在那就放进去
+              if (!tempIsH){
+                
+                
+                storageList.push(newList[key])
+                console.log("storageList==", storageList);
+              }
+              
+            }
+            newList = storageList;
             if (!isHave){
               newList.push(device);
             }
           }else{
             newList = [device];
           }
-          console.log("查看存储成功的设备--", tempList, newList);
-          if (tempList.length != newList.length){
-            wx.setStorage({
-              key:'deviceList',
-              data: tempList,
-              success:function(){
-                console.log("存储成功");
-                self.stopSearchBLEDevices();
-                // 存储成功
-                wx.navigateBack();
-              }
-            })
-          }else{
-            self.stopSearchBLEDevices();
-            // 设备已存在
-            wx.navigateBack();
-          }
+          console.log("查看存储成功的设备--", newList);
+          wx.setStorage({
+            key:'deviceList',
+            data: newList,
+            success:function(){
+              console.log("存储成功");
+              self.stopSearchBLEDevices();
+              // 存储成功
+              wx.navigateBack();
+            }
+          })
  
         },
         fail(result){

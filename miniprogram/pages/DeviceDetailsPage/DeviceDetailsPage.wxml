@@ -23,7 +23,7 @@
             <text class="isConnect-tag">{{deviceInfo.isConnection ? "已连接":"未连接"}}</text>
           </view>
         </van-row>
-        <van-cell class="nib-strength-adjust" value="{{nibStrength == -1?'--':nibStrength}}" capture-catch:tap="onClickNibStrength" title="笔尖信号强度调节" is-link />
+        <van-cell class="nib-strength-adjust" value="{{nibStrength == -100?'--':nibStrength}}" capture-catch:tap="onClickNibStrength" title="笔尖信号强度调节" is-link />
       </view>
     </view>
 
@@ -52,13 +52,13 @@
     </view>
     <view class="item-box">
       <van-cell-group inset>
-        <van-cell title="删除设备" />
+        <van-cell title="删除设备" bind:tap="onDeleteDevice"/>
       </van-cell-group>
     </view>
   </scroll-view>
   <van-popup class="selectPicker" show="{{ isShowPicker }}" position="bottom" round bind:close="onPickerClose">
     <van-picker title='{{pickerTitle}}' columns="{{ funcList }}" bind:change="onPickerChange" default-index="{{ pickerIndex}}" bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" show-toolbar />
-  </van-popup>>
+  </van-popup>
 </view>
 
 <van-popup show="{{ isShowNibStrengthChangeView }}" close-icon-position="top-left" position="bottom" custom-style="height: 40%" bind:close="onHideNibStrengthView">
@@ -70,14 +70,17 @@
       <view class="confirm-btn" bind:tap="onConfirmChangeNibStrengthView">保存</view>
     </view>
     <view class="slider-box">
-      <view class="add-btn" bind:tap="onClickAdd">+</view>
+      <view class="reduce-btn" bind:tap="onClickReduce">－</view>
       <view class="slider">
         <van-slider min="-20" max="20" bar-height="3px" use-button-slot bind:drag="onChangeNibStrength">
           <view class="custom-button" slot="button">{{ nibChangeValue ? nibChangeValue:0 }}/20</view>
         </van-slider>
       </view>
-      <view class="reduce-btn" bind:tap="onClickReduce">－</view>
+      <view class="add-btn" bind:tap="onClickAdd">+</view>
+      
     </view>
 
   </view>
 </van-popup>
+
+<van-dialog id="van-dialog" />
