@@ -2,10 +2,11 @@
 	"pages": [
     "pages/ConnectedDevicePage/ConnectedDevicePage",
     "pages/DeviceDetailsPage/DeviceDetailsPage",
+
+   
 	
 		"pages/index/index",
-		"pages/AddDevice/AddDevice",
-		"pages/DeviceDetails/DeviceDetails"
+		"pages/AddDevice/AddDevice"
 		
 	],
 	"window": {

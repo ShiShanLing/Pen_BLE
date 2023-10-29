@@ -300,6 +300,111 @@ page {
   }
 }
 
+.nibStrength-box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .headBox{
+    height: auto;
+    background-color: rgba(231, 231, 231, 0.6);
+    display: flex;
+    flex-direction: row;
+    //取消按钮
+    .cnecel-btn{
+      color: rgb(31, 31, 31);
+      font-size: 14px;
+      padding: 5px 10px;
+      margin: 10px;
+      
+    }
+    //标题
+    .title{
+      flex: 1;
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+    //确定按钮
+    .confirm-btn{
+      font-size: 15px;
+      padding: 5px 10px;
+      margin: 10px;
+      color: @main-color;
+      
+    }
+  }
+  .slider-box{
+    // background-color: yellow;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    .add-btn{
+      margin-top: 5px;
+      margin-left: 10px;
+      font-size: 30px;
+      color: white;
+      width: 50px;
+      height: 50px;
+      line-height: 45px;
+      border-radius: 25px;
+      text-align: center;
+      background-color: @main-color;
+    }
+    .slider{
+      margin-top: 30px;
+      // display: flex;
+      // flex-direction: row;
+      // align-items: center;
+      background-color: orange;
+      margin: 30px 30px;
+      flex: 1;
+      .custom-button{
+        color: white;
+        background-color: red;
+        border-radius: 12.5px;
+        font-size: 12px;
+        line-height: 25px;
+        padding: 0 10px;
+        height: 25px;
+      }
+    }
+    .reduce-btn{
+      
+      margin-top: 5px;
+      margin-right: 10px;
+      font-size: 30px;
+      color: white;
+      width: 50px;
+      height: 50px;
+      line-height: 45px;
+      border-radius: 25px;
+      text-align: center;
+      background-color: @main-color;
+    }
+  }
+  .NibStrength{
+    // background-color: red;
+    margin: 70px 55px;
+    // margin-top: 100px;
+    height: 50px;
+    // width: 100%;
+    .custom-button{
+      color: white;
+      background-color: red;
+      border-radius: 12.5px;
+      font-size: 12px;
+      line-height: 25px;
+      padding: 0 10px;
+      height: 25px;
+    }
+  }
+
+}
+
+
 .selectPicker {
   position: absolute;
   bottom: 0;

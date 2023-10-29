@@ -1,7 +1,7 @@
 <!--pages/DeviceDetails.wxml-->
 <view class="container">
   <scroll-view class="scroll" scroll-y>
-    <view class="showPencilItem" >
+    <view class="showPencilItem">
       <view class="{{deviceInfo.isConnection?'content connected':'content'}}">
         <van-row>
           <div class="pen-info-box">
@@ -19,35 +19,65 @@
         <van-row>
           <view class="pen-sydl-box">
             <image class="pen-sydl-state" src="{{deviceInfo.battery.length?'../../images/dl.png':'../../images/dl-hui.png'}}"></image>
-            <text class="pen-sydl-text">{{deviceInfo.battery.length?item.battery:"--%"}} {{item.chargingState.length?item.chargingState:"未充电"}}</text>
+            <text class="pen-sydl-text">{{deviceInfo.battery.length?deviceInfo.battery:"--%"}} {{deviceInfo.chargingState.length?deviceInfo.chargingState:"未充电"}}</text>
             <text class="isConnect-tag">{{deviceInfo.isConnection ? "已连接":"未连接"}}</text>
           </view>
         </van-row>
-        <van-cell class="nib-strength-adjust" value="{{nibStrength}}" title="笔尖信号强度调节" is-link />
+        <van-cell class="nib-strength-adjust" value="{{nibStrength == -1?'--':nibStrength}}" capture-catch:tap="onClickNibStrength" title="笔尖信号强度调节" is-link />
       </view>
     </view>
 
     <view wx:if="{{deviceInfo.isConnection}}" class="item-box">
       <view class="pen-content func-change-content">
         <van-cell-group title="按键-上" title-class="van-cell-title">
-          <van-cell title="单按" value="内容" is-link data-tag='1.1' bind:tap="onShowPicker" />
-          <van-cell title="双按" value="内容" is-link data-tag='1.2' bind:tap="onShowPicker" />
-          <van-cell title="长按" value="内容" is-link data-tag='1.3' bind:tap="onShowPicker" />
+          <van-cell title="单按" value="{{currentTopKey.click == -1?'--':funcList[currentTopKey.click]}}" is-link data-tag='0.1' bind:tap="onShowPicker" />
+          <van-cell title="双按" value="{{currentTopKey.doubleClick == -1?'--':funcList[currentTopKey.doubleClick]}}" is-link data-tag='0.2' bind:tap="onShowPicker" />
+          <van-cell title="长按" value="开关机(不可修改)" data-tag='0.3' />
         </van-cell-group>
       </view>
     </view>
     <view wx:if="{{deviceInfo.isConnection}}" class="item-box">
       <view class="pen-content func-change-content">
         <van-cell-group title="按键-下" title-class="van-cell-title">
-          <van-cell title="单按" value="内容" is-link data-tag='2.1' bind:tap="onShowPicker" />
-          <van-cell title="双按" value="内容" is-link data-tag='2.2' bind:tap="onShowPicker" />
-          <van-cell title="长按" value="内容" is-link data-tag='2.3' bind:tap="onShowPicker" />
+          <van-cell title="单按" value="{{currentBottomKey.click == -1?'--':funcList[currentBottomKey.click]}}" is-link data-tag='1.1' bind:tap="onShowPicker" />
+          <van-cell title="双按" value="{{currentBottomKey.doubleClick == -1?'--':funcList[currentBottomKey.doubleClick]}}" is-link data-tag='1.2' bind:tap="onShowPicker" />
+          <van-cell title="长按" value="{{currentBottomKey.longPress == -1?'--':funcList[currentBottomKey.longPress]}}" is-link data-tag='1.3' bind:tap="onShowPicker" />
         </van-cell-group>
       </view>
     </view>
+    <view wx:if="{{deviceInfo.isConnection}}" class="item-box">
+      <van-cell-group inset>
+        <van-cell title="恢复出厂设置" bind:tap="onFactoryDataReset" />
+      </van-cell-group>
+    </view>
+    <view class="item-box">
+      <van-cell-group inset>
+        <van-cell title="删除设备" />
+      </van-cell-group>
+    </view>
   </scroll-view>
   <van-popup class="selectPicker" show="{{ isShowPicker }}" position="bottom" round bind:close="onPickerClose">
-    <van-picker title='{{pickerTitle}}' columns="{{ funcList }}" bind:change="onPickerChange" show-toolbar />
+    <van-picker title='{{pickerTitle}}' columns="{{ funcList }}" bind:change="onPickerChange" default-index="{{ pickerIndex}}" bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" show-toolbar />
   </van-popup>>
 </view>
-<!-- <view hidden="isShowPicker" class="isShowPicker?'':selectPicker"></view> -->
+
+<van-popup show="{{ isShowNibStrengthChangeView }}" close-icon-position="top-left" position="bottom" custom-style="height: 40%" bind:close="onHideNibStrengthView">
+
+  <view class="nibStrength-box">
+    <view class="headBox">
+      <view class="cnecel-btn" bind:tap="onHideNibStrengthView">取消</view>
+      <view class="title">修改笔尖信号强度</view>
+      <view class="confirm-btn" bind:tap="onConfirmChangeNibStrengthView">保存</view>
+    </view>
+    <view class="slider-box">
+      <view class="add-btn" bind:tap="onClickAdd">+</view>
+      <view class="slider">
+        <van-slider min="-20" max="20" bar-height="3px" use-button-slot bind:drag="onChangeNibStrength">
+          <view class="custom-button" slot="button">{{ nibChangeValue ? nibChangeValue:0 }}/20</view>
+        </van-slider>
+      </view>
+      <view class="reduce-btn" bind:tap="onClickReduce">－</view>
+    </view>
+
+  </view>
+</van-popup>

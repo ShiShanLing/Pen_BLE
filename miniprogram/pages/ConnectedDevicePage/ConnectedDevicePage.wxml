@@ -1,40 +1,41 @@
 <!--pages/ConnectedDevice/ConnectedDevice.wxml-->
 <view class="container">
-<div class="scroll">
-  <view class="showPencilItem" wx:for="{{deviceList}}" wx:for-index="index" wx:key="index" wx:for-item="item" bind:tap="toDeviceDetails" data-item='{{item}}'>
+  <div class="scroll">
+    <view class="showPencilItem" wx:for="{{deviceList}}" wx:for-index="index" wx:key="index" wx:for-item="item" bind:tap="toDeviceDetails" data-item='{{item}}'>
 
-      <view  class="{{item.isConnection?'content connected':'content'}}">
-        <van-row >
-        <div class="pen-info-box">
-          <image  wx:if="{{item.isConnection}}" class="pen-icon" src="../../images/pencil-lan.png" ></image>
-            <image wx:if="{{!item.isConnection}}" class="pen-icon icon-dark" src="../../images/pencil-hui.png" ></image>       
+      <view class="{{item.isConnection?'content connected':'content'}}">
+        <van-row>
+          <div class="pen-info-box">
+            <image wx:if="{{item.isConnection}}" class="pen-icon" src="../../images/pencil-lan.png"></image>
+            <image wx:if="{{!item.isConnection}}" class="pen-icon icon-dark" src="../../images/pencil-hui.png"></image>
             <label class="pen-name" style="color: {{item.isConnection?'#1989fa':'rgb(31, 31, 31)'}};">{{item.name}}</label>
-            
+
             <view class="pen-connect-state-box">
-            <label class="text">{{item.isConnection ? "YES":"NO"}}</label>
-            <van-switch class="switch" data-connection='{{item.isConnection}}' data-devId='{{item.deviceId}}' catch:tap="onClickSwitchBLEState" checked="{{item.isConnection}}" size="20px" />
-          </view>
-        </div>
+              <label class="text">{{item.isConnection ? "YES":"NO"}}</label>
+              <van-switch class="switch" data-connection='{{item.isConnection}}' data-devId='{{item.deviceId}}' catch:tap="onClickSwitchBLEState" checked="{{item.isConnection}}" size="20px" />
+            </view>
+          </div>
           <!-- pen-connect-state-box -->
         </van-row>
         <van-row>
-        <view class="pen-sydl-box">
-            <image class="pen-sydl-state" src="{{item.battery.length?'../../images/dl.png':'../../images/dl-hui.png'}}" ></image>
+          <view class="pen-sydl-box">
+            <image class="pen-sydl-state" src="{{item.battery.length?'../../images/dl.png':'../../images/dl-hui.png'}}"></image>
             <text class="pen-sydl-text">{{item.battery.length?item.battery:"100%"}} {{item.chargingState.length?item.chargingState:"未充电"}}</text>
             <text class="isConnect-tag">{{item.isConnection ? "已连接":"未连接"}}</text>
-        </view>
+          </view>
         </van-row>
-        
+
       </view>
-  </view>
-  <view class="addItem" bind:tap="onAddDevice">
+    </view>
+    <view class="addItem" bind:tap="onAddDevice">
       <view class="content">
-        <view class="item" >
+        <view class="item">
           <van-icon class="icon" name="add-o" color="#1989fa" />
           <label class="text">添加设备</label>
         </view>
       </view>
     </view>
-</div>
+  </div>
 
+  <image class="refresh-btn" src="../../images/shauxin.png" capture-catch:tap="refreshData"></image>
 </view>

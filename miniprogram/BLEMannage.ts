@@ -111,7 +111,7 @@ export class BLEMannage {
 
     //A1211001030C0100000000000000000000000017
 
-    let dqdl = "A1211001030C0100000000000000000000000011"
+    // let dqdl = "A1211001030C0100000000000000000000000011"
     // 15+22+3
     //获取强度比
     // let dqdl = "A125000000000000000000000000000000000000"
@@ -121,7 +121,7 @@ export class BLEMannage {
     // let dqdl = 'A103000000000000000000000000000000000000'
     //读取按钮功能
     // let dqdl = "A122000100000000000000000000000000000000"
-    console.log("dqdl===", dqdl);
+    // console.log("dqdl===", dqdl);
     let bufferArray = hexStrToArrayBuffer(hexStr)
     console.log("bufferArray==", bufferArray);
     wx.writeBLECharacteristicValue({

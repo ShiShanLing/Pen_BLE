@@ -8,6 +8,7 @@
     "van-col": "@vant/weapp/col/index",
 		"van-switch": "@vant/weapp/switch/index",
 		"van-picker": "@vant/weapp/picker/index",
-		"van-popup": "@vant/weapp/popup/index"
+    "van-popup": "@vant/weapp/popup/index",
+    "van-slider": "@vant/weapp/slider/index"
   }
 }

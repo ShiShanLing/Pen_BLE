@@ -72,6 +72,13 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow() {
+     let value = '3a'
+    
+
+      let numValue =  parseInt(value, 16)
+      numValue = numValue < 10 ? 10:numValue;
+      numValue = numValue > 90 ? 90:numValue;
+      console.log("numValue==", numValue);
     this.setData({
       isHidePages: false
     })
@@ -87,8 +94,9 @@ Page({
       //获取当前连接的设备设置他的电量和充电状态
       if (hexStrList.length == 20) {
        
-        let Battery = hexStrList[3];
+        let Battery = '0x' + hexStrList[3];
         let state = hexStrList[4];
+        Battery = eval(Battery).toString(10)
         console.log(Battery, state);
         let newList = [...self.data.deviceList];
         newList.forEach((dev) => {
@@ -105,15 +113,8 @@ Page({
         
       }
     }
-    this.data.bleMannage.getConnectedDevices((devices)=>{
-      //当前正在连接的设备也可能变了
-      //这里不能直接覆盖 回来后可能新增了可能删除了-但是状态要记住-还有电量
-      //获取到正在连接的获取他的信息
-      self.onConnectingToDevice(app.currentConDevId)
-      self.setData({
-        deviceList: devices
-      })
-    })
+    this.refreshData()
+   
 	},
 
 	/**
@@ -248,6 +249,26 @@ characteristicId_TX:"",
         })
       }
     }))
+  },
+  refreshData(){
+    let self = this;
+    // wx.showLoading({
+    //   title:"正在获取数据"
+    // })
+    // wx.hideLoading()
+    this.data.bleMannage.getConnectedDevices((devices)=>{
+      //当前正在连接的设备也可能变了
+      //这里不能直接覆盖 回来后可能新增了可能删除了-但是状态要记住-还有电量
+      //获取到正在连接的获取他的信息
+   
+      self.setData({
+        deviceList: devices
+      })
+      
+      if (app.currentConDevId.length){
+        self.onConnectingToDevice(app.currentConDevId)
+      }
+    })
   }
 
   
