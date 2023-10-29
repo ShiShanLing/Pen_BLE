@@ -35,8 +35,12 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       },
     })
-
-		this.globalData.SystemInfo = wx.getSystemInfoSync()
+    this.globalData.SystemInfo = wx.getSystemInfoSync({
+      success(res){
+        res.locationAuthorized = true;
+        res.locationEnabled = true;
+    }
+    })
 	},
   globalData: {SystemInfo: {}},
   //同时只能有一个设备id 服务id 特征id

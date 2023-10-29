@@ -19,17 +19,7 @@ Page({
 	 */
 	onLoad() {
     console.log("SystemInfoUtil.platform==", SystemInfoUtil.platform);
-    
-    wx.authorize({ scope: "" })
-      wx.getLocation({
-        type: 'gcj02', //默认为 wgs84 返回 gps 坐标，gcj02 返回可用于wx.openLocation的坐标
-        success: (res) => {
-          console.log(res)
-        },
-        fail: (err) => {
-          console.log(err)
-        }
-      })
+
     //申请蓝牙权限
     wx.authorize({ scope: "scope.bluetooth" })
     let self = this;
