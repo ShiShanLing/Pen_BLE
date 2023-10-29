@@ -72,14 +72,12 @@
     <view class="slider-box">
       <view class="reduce-btn" bind:tap="onClickReduce">－</view>
       <view class="slider">
-        <van-slider min="-20" max="20" bar-height="3px" use-button-slot bind:drag="onChangeNibStrength">
+        <van-slider min="-20" max="20" bar-height="3px" value="{{nibChangeValue}}" use-button-slot bind:drag="onChangeNibStrength">
           <view class="custom-button" slot="button">{{ nibChangeValue ? nibChangeValue:0 }}/20</view>
         </van-slider>
       </view>
       <view class="add-btn" bind:tap="onClickAdd">+</view>
-      
     </view>
-
   </view>
 </van-popup>
 

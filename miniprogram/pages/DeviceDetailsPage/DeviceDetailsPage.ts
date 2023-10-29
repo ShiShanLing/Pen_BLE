@@ -119,8 +119,8 @@ Page({
         numValue = numValue < 10 ? 10 : numValue;
         numValue = numValue > 90 ? 90 : numValue;
         self.setData({
-          nibStrength: (numValue - 50) / 2,
-          nibChangeValue: (numValue - 50) / 2,
+          nibStrength: (50-numValue) / 2,
+          nibChangeValue: (50-numValue) / 2,
         })
         // a125100000000000000000000000000000000000
       } else if (hexStr.indexOf("a122") != -1) {
@@ -490,7 +490,7 @@ characteristicId_TX:"",
 
     let value = this.data.nibChangeValue;
     console.log("修改前--", value);
-    value = value * 2 + 50
+    value = 50 - value * 2
     console.log("修改后--", value);
     value.toString(16);
     let hexValue = this.stringToHexString(value.toString(16));
